@@ -6,8 +6,8 @@ XML served raw via jgraph.github.io (from `main`) and loaded into the app with
 search**: the `drawio-icons` corpus (`~/dev/drawio-icons`) enumerates every
 `libs/**/*.xml` here and builds the D1/Vectorize index behind
 `icons.diagrams.net` / `app.diagrams.net/iconSearch2` (worker source:
-`~/dev/mxgraph-gliffy-java/cf-workers/icon-search2`). A change here is not
-finished until the server side is regenerated (see checklist below).
+`~/dev/drawio/src/main/server/cf/cf-workers/icon-search2`). A change here is
+not finished until the server side is regenerated (see checklist below).
 
 ## Library format
 
@@ -88,9 +88,13 @@ Conventions (each learned the hard way):
    shape and confirm the `.shape_fill`/`.shape_outline` swatch appears in
    Format → Style and recolors (values are light-dark pairs; on a dark canvas
    the dark value renders).
-5. **Regenerate the server side** (`~/dev/drawio-icons`, runbooks in
-   `corpus/README.md` and `cf-workers/icon-search2/README.md` — follow those;
-   summary of the non-obvious parts):
+5. **Regenerate the server side** — runbooks: "Adding a new set" in
+   `~/dev/drawio-icons/corpus/README.md` (corpus rebuild) and
+   `~/dev/drawio/src/main/server/cf/cf-workers/icon-search2/README.md`
+   (D1 load/deploy) — follow those; summary of the non-obvious parts:
+   - **New sets need a `license` + `author` entry in
+     `~/dev/drawio-icons/corpus/libs-meta.json`** (keyed by XML basename);
+     the builders fail fast without it.
    - Run the six-builder chain; review `derived/libs-report.json` for expected
      counts and zero unwrap errors.
    - Upload staged R2 assets and regenerated libraries/site BEFORE the new
